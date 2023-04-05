@@ -16,7 +16,7 @@ namespace ChopesGames
         public FormCreerProduit()
         {
             InitializeComponent();
-            maCnx = new MySqlConnection("SERVER=127.0.0.1; DATABASE=chopesgames; UID=root; PASSWORD=");
+            maCnx = new MySqlConnection("SERVER=127.0.0.1; DATABASE=ppe_chopesgames; UID=root; PASSWORD=");
         }
 
         private void FormCreerProduit_Load(object sender, EventArgs e)

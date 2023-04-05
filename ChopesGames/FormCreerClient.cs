@@ -24,7 +24,7 @@ namespace ChopesGames
         private void btnCreer_Click(object sender, EventArgs e)
         {
             MySqlConnection maCnx; // ! déclaration avant le bloc Try
-            maCnx = new MySqlConnection("SERVER=127.0.0.1; DATABASE=chopesgames; UID=root; PASSWORD=");
+            maCnx = new MySqlConnection("SERVER=127.0.0.1; DATABASE=ppe_chopesgames; UID=root; PASSWORD=");
             if (nomEstValide && prenomEstValide && adresseEstValide && villeEstValide
                 && codePostalEstValide && emailEstValide)
             {

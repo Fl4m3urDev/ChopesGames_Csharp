@@ -11,7 +11,7 @@ namespace ChopesGames
         public FormListerCommandes()
         {
             InitializeComponent();
-            sqlcon = new MySqlConnection("SERVER=127.0.0.1; DATABASE=chopesgames; UID=root; PASSWORD=");
+            sqlcon = new MySqlConnection("SERVER=127.0.0.1; DATABASE=ppe_chopesgames; UID=root; PASSWORD=");
         }
 
         void ChargerListeCommandes(int noClient)
