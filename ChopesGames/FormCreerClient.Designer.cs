@@ -42,6 +42,8 @@
             this.tbxCodePostal = new System.Windows.Forms.TextBox();
             this.tbxEmail = new System.Windows.Forms.TextBox();
             this.lblAvertissement = new System.Windows.Forms.Label();
+            this.lblMotDePasse = new System.Windows.Forms.Label();
+            this.tbxMotDePasse = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // lblNom
@@ -100,7 +102,7 @@
             // 
             // btnCreer
             // 
-            this.btnCreer.Location = new System.Drawing.Point(247, 229);
+            this.btnCreer.Location = new System.Drawing.Point(247, 252);
             this.btnCreer.Name = "btnCreer";
             this.btnCreer.Size = new System.Drawing.Size(75, 23);
             this.btnCreer.TabIndex = 6;
@@ -177,17 +179,41 @@
             // lblAvertissement
             // 
             this.lblAvertissement.AutoSize = true;
-            this.lblAvertissement.Location = new System.Drawing.Point(49, 272);
+            this.lblAvertissement.ForeColor = System.Drawing.Color.Red;
+            this.lblAvertissement.Location = new System.Drawing.Point(44, 287);
             this.lblAvertissement.Name = "lblAvertissement";
             this.lblAvertissement.Size = new System.Drawing.Size(264, 13);
             this.lblAvertissement.TabIndex = 13;
             this.lblAvertissement.Text = "A l\'exception du mail, tous les champs sont obligatoires";
+            // 
+            // lblMotDePasse
+            // 
+            this.lblMotDePasse.AutoSize = true;
+            this.lblMotDePasse.Location = new System.Drawing.Point(34, 220);
+            this.lblMotDePasse.Name = "lblMotDePasse";
+            this.lblMotDePasse.Size = new System.Drawing.Size(71, 13);
+            this.lblMotDePasse.TabIndex = 15;
+            this.lblMotDePasse.Text = "Mot de passe";
+            // 
+            // tbxMotDePasse
+            // 
+            this.tbxMotDePasse.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.tbxMotDePasse.Location = new System.Drawing.Point(126, 217);
+            this.tbxMotDePasse.Name = "tbxMotDePasse";
+            this.tbxMotDePasse.PasswordChar = '*';
+            this.tbxMotDePasse.Size = new System.Drawing.Size(196, 20);
+            this.tbxMotDePasse.TabIndex = 16;
+            this.tbxMotDePasse.Text = "ex. : *********";
+            this.tbxMotDePasse.Enter += new System.EventHandler(this.tbxMotDePasse_Enter);
+            this.tbxMotDePasse.Leave += new System.EventHandler(this.tbxMotDePasse_Leave);
             // 
             // FormCreerClient
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(356, 318);
+            this.Controls.Add(this.tbxMotDePasse);
+            this.Controls.Add(this.lblMotDePasse);
             this.Controls.Add(this.lblAvertissement);
             this.Controls.Add(this.tbxEmail);
             this.Controls.Add(this.tbxCodePostal);
@@ -225,5 +251,7 @@
         private System.Windows.Forms.TextBox tbxCodePostal;
         private System.Windows.Forms.TextBox tbxEmail;
         private System.Windows.Forms.Label lblAvertissement;
+        private System.Windows.Forms.Label lblMotDePasse;
+        private System.Windows.Forms.TextBox tbxMotDePasse;
     }
 }

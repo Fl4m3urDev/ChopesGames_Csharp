@@ -12,9 +12,10 @@ namespace ChopesGames
         private string nom, prenom, adresse, ville;
         private int codePostal;
         private string email;
+        private string motdepasse;
 
         public Client(int noClient, string nom, string prenom, string adresse,
-                        string ville, int codePostal, string email)
+                        string ville, int codePostal, string email, string motdepasse)
         {
             this.noClient = noClient;
             this.nom = nom;
@@ -23,6 +24,7 @@ namespace ChopesGames
             this.ville = ville;
             this.codePostal = codePostal;
             this.email = email;
+            this.motdepasse = motdepasse;
         }
 
         public int GetNoClient()

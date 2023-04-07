@@ -29,6 +29,7 @@ namespace ChopesGames
                 string nom, prenom, adresse, ville;
                 int codePostal;
                 string email;
+                string motdepasse;
                 MySqlDataReader jeuEnr = null;
                 sqlcon.Open();
                 var maCde = new MySqlCommand("Select * from Client", sqlcon);
@@ -42,7 +43,8 @@ namespace ChopesGames
                     ville = jeuEnr.GetString("VILLE");
                     codePostal = jeuEnr.GetInt32("CODEPOSTAL");
                     email = jeuEnr.GetString("EMAIL");
-                    cmbClient.Items.Add(new Client(noClient, nom, prenom, adresse, ville, codePostal, email));
+                    motdepasse = jeuEnr.GetString("MOTDEPASSE");
+                    cmbClient.Items.Add(new Client(noClient, nom, prenom, adresse, ville, codePostal, email, motdepasse));
                 }
             }
             catch (MySqlException erreur)
