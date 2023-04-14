@@ -62,12 +62,13 @@ namespace ChopesGames
             // Chargement des produits dans cmbProduit
             try
             {
-                int noProduit;
-                string libelle;
-                double prixHT, tauxTVA;
+                int noProduit, disponibilite, vitrine;
+                string libelle, detail, nomImage;
+                double prixHT, tauxTVA, quantiteEnStock;
+                DateTime dateAjout;
                 MySqlDataReader jeuEnr = null;
                 sqlcon.Open();
-                string requete = "Select NOPRODUIT, LIBELLE, PRIXHT, TAUXTVA FROM produit ORDER BY NOPRODUIT";
+                string requete = "Select NOPRODUIT, LIBELLE, PRIXHT, TAUXTVA, NOMIMAGE, QUANTITEENSTOCK, DATEAJOUT, DISPONIBLE, VITRINE FROM produit ORDER BY NOPRODUIT";
                 var maCde = new MySqlCommand(requete, sqlcon);
                 jeuEnr = maCde.ExecuteReader();
                 while (jeuEnr.Read())
@@ -76,7 +77,7 @@ namespace ChopesGames
                     libelle = jeuEnr.GetString("LIBELLE");
                     prixHT = jeuEnr.GetDouble("PRIXHT");
                     tauxTVA = jeuEnr.GetDouble("TAUXTVA");
-                    cmbProduit.Items.Add(new Produit(noProduit, libelle, prixHT, tauxTVA));
+                    //cmbProduit.Items.Add(new Produit(noProduit, libelle, prixHT, tauxTVA));
                 }
             }
             catch (MySqlException erreur)

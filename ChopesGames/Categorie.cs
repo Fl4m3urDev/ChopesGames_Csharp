@@ -21,6 +21,12 @@ namespace ChopesGames
         {
             return noCategorie;
         }
+
+        public string GetLibelle()
+        {
+            return libelle;
+        }
+
         public override string ToString()
         {
             return noCategorie.ToString() + " - " + libelle;

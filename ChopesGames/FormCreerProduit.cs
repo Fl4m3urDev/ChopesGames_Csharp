@@ -93,8 +93,8 @@ namespace ChopesGames
                 {
                     string requête;
                     maCnx.Open(); // on se connecte
-                    requête = "Insert into Produit(NOCATEGORIE,NOMARQUE,LIBELLE,DETAIL,PRIXHT,TAUXTVA) " +
-                        "values (@noCategorie,@noMarque,@libelle,@detail,@prixHT,@tauxTVA)";
+                    requête = "Insert into produit(NOCATEGORIE,NOMARQUE,LIBELLE,DETAIL,PRIXHT,TAUXTVA,NOMIMAGE,QUANTITEENSTOCK,DATEAJOUT,DISPONIBLE,VITRINE) " +
+                        "values (@noCategorie,@noMarque,@libelle,@detail,@prixHT,@tauxTVA,@nomimage,@quantiteenstock,@dateajout,@disponible,@vitrine)";
                     var maCde = new MySqlCommand(requête, maCnx);
                     maCde.Prepare();
 
@@ -106,7 +106,26 @@ namespace ChopesGames
                     maCde.Parameters.AddWithValue("@detail", tbxDetail.Text);
                     maCde.Parameters.AddWithValue("@prixHT", tbxPrixHT.Text);
                     maCde.Parameters.AddWithValue("@tauxTVA", tbxTauxTVA.Text);
-                                        
+                    maCde.Parameters.AddWithValue("@nomimage", tbxNomImage.Text);
+                    maCde.Parameters.AddWithValue("@quantiteenstock", nudQuantiteEnStock.Value);
+                    maCde.Parameters.AddWithValue("@dateajout", dateTimeAjout.Value.Date);
+                    if (cbxDisponibiliteOui.Checked == true)
+                    {
+                        maCde.Parameters.AddWithValue("@disponible", 1);
+                    }
+                    else
+                    {
+                        maCde.Parameters.AddWithValue("@disponible", 0);
+                    }
+                    if (cbxVitrineOui.Checked == true)
+                    {
+                        maCde.Parameters.AddWithValue("@vitrine", 1);
+                    }
+                    else
+                    {
+                        maCde.Parameters.AddWithValue("@vitrine", 0);
+                    }
+
                     int nbLigneAffectées = maCde.ExecuteNonQuery();
                     MessageBox.Show(nbLigneAffectées.ToString()+" produit(s) créé(s).", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     
@@ -116,6 +135,8 @@ namespace ChopesGames
                     tbxPrixHT.Clear();
                     tbxTauxTVA.Clear();
                     cmbCategorie.Focus(); // on remet le focus sur la combo catégorie
+                    tbxPrixHT.Clear();
+                    tbxNomImage.Clear();
                 }
                 catch (MySqlException erreur)
                 {
@@ -152,6 +173,7 @@ namespace ChopesGames
                 prixHTEstValide = false;
             }
         }
+
         private void tbxTauxTVA_Leave(object sender, EventArgs e)
         {
             if (regexPrixHTTauxTVA.Match(tbxTauxTVA.Text).Success & tbxTauxTVA.Text != "")
@@ -165,5 +187,39 @@ namespace ChopesGames
                 tauxTVAEstValide = false;
             }
         }
+
+        private void ckbDisponibiliteNon_Click(object sender, EventArgs e)
+        {
+            cbxDisponibiliteOui.Checked = false;
+            cbxDisponibiliteNon.Checked = true;
+        }
+
+        private void ckbDisponibiliteOui_Click(object sender, EventArgs e)
+        {
+            if (nudQuantiteEnStock.Value != 0)
+            {
+                cbxDisponibiliteOui.Checked = true;
+                cbxDisponibiliteNon.Checked = false;
+            }
+            else
+            {
+                cbxDisponibiliteOui.Checked = false;
+                MessageBox.Show("Vous ne pouvez pas activité la disponibilitée d'un produit sans en avoir en stock !");
+            }
+
+        }
+
+        private void ckbVitrineNon_Click(object sender, EventArgs e)
+        {
+            cbxVitrineNon.Checked = true;
+            cbxVitrineOui.Checked = false;
+        }
+
+        private void ckbVitrineOui_Click(object sender, EventArgs e)
+        {
+            cbxVitrineNon.Checked = false;
+            cbxVitrineOui.Checked = true;
+        }
+
     }
 }

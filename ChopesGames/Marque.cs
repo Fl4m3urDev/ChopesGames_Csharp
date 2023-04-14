@@ -21,6 +21,12 @@ namespace ChopesGames
         {
             return noMarque;
         }
+
+        public string GetNom()
+        {
+            return nom;
+        }
+
         public override string ToString()
         {
             return noMarque.ToString() + " - " + nom;
