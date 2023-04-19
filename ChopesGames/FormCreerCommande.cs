@@ -77,7 +77,7 @@ namespace ChopesGames
                     libelle = jeuEnr.GetString("LIBELLE");
                     prixHT = jeuEnr.GetDouble("PRIXHT");
                     tauxTVA = jeuEnr.GetDouble("TAUXTVA");
-                    //cmbProduit.Items.Add(new Produit(noProduit, libelle, prixHT, tauxTVA));
+                    //cmbProduit.Items.Add(new Produit(noProduit, libelle));
                 }
             }
             catch (MySqlException erreur)

@@ -98,8 +98,9 @@
             // miModifierProduit
             // 
             this.miModifierProduit.Name = "miModifierProduit";
-            this.miModifierProduit.Size = new System.Drawing.Size(113, 22);
+            this.miModifierProduit.Size = new System.Drawing.Size(180, 22);
             this.miModifierProduit.Text = "Produit";
+            this.miModifierProduit.Click += new System.EventHandler(this.miModifierProduit_Click);
             // 
             // listerToolStripMenuItem
             // 

@@ -109,6 +109,12 @@
   <ItemGroup>
     <Compile Include="Categorie.cs" />
     <Compile Include="Client.cs" />
+    <Compile Include="FormModifierProduit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormModifierProduit.Designer.cs">
+      <DependentUpon>FormModifierProduit.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormAccueil.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -166,6 +172,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormListerCommandes.resx">
       <DependentUpon>FormListerCommandes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormModifierProduit.resx">
+      <DependentUpon>FormModifierProduit.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

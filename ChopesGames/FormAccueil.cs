@@ -49,5 +49,10 @@ namespace ChopesGames
             formAPropos.ShowDialog();
         }
 
+        private void miModifierProduit_Click(object sender, EventArgs e)
+        {
+            FormModifierProduit formModifierProduit = new FormModifierProduit();
+            formModifierProduit.ShowDialog();
+        }
     }
 }

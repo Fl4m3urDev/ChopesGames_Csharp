@@ -9,15 +9,17 @@ namespace ChopesGames
     class Produit
     {
         // NOPRODUIT, QUANTITEENSTOCK, LIBELLE, DETAIL, NOMIMAGE, PRIXHT, TAUXTVA, DISPONIBLE, VITRINE, DATEAJOUT
-        private int noProduit, quantiteEnStock;
+        private int noProduit, noCategorie, noMarque, quantiteEnStock;
         private string libelle, detail, nomImage;
         private double prixHT, tauxTVA;
         bool disponibilite, vitrine;
         DateTime dateAjout;
 
-        public Produit(int noProduit, int quantiteEnStock,  string libelle, string detail, string nomImage, double prixHT, double tauxTVA, bool disponibilite, bool vitrine, DateTime dateAjout)
+        public Produit(int noProduit, int noCategorie, int noMarque, int quantiteEnStock, string libelle, string detail, string nomImage, double prixHT, double tauxTVA, bool disponibilite, bool vitrine, DateTime dateAjout)
         {
             this.noProduit = noProduit;
+            this.noCategorie = noCategorie;
+            this.noMarque = noMarque;
             this.quantiteEnStock = quantiteEnStock;
             this.libelle = libelle;
             this.detail = detail;
@@ -31,6 +33,14 @@ namespace ChopesGames
         public int GetNoProduit()
         {
             return noProduit;
+        }
+        public int GetNoCategorie()
+        {
+            return noCategorie;
+        }
+        public int GetNoMarque()
+        {
+            return noMarque;
         }
         public int GetQuantite()
         {
