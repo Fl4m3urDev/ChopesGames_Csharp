@@ -109,6 +109,12 @@
   <ItemGroup>
     <Compile Include="Categorie.cs" />
     <Compile Include="Client.cs" />
+    <Compile Include="FormListerProduits.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormListerProduits.Designer.cs">
+      <DependentUpon>FormListerProduits.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormModifierProduit.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -155,6 +161,9 @@
     <Compile Include="Produit.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FormListerProduits.resx">
+      <DependentUpon>FormListerProduits.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormAccueil.resx">
       <DependentUpon>FormAccueil.cs</DependentUpon>
     </EmbeddedResource>

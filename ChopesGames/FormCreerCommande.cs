@@ -15,7 +15,7 @@ namespace ChopesGames
         public FormCreerCommande()
         {
             InitializeComponent();
-            sqlcon = new MySqlConnection("SERVER=127.0.0.1; DATABASE=ppe_chopesgames; UID=root; PASSWORD=");
+            sqlcon = new MySqlConnection("SERVER=127.0.0.1; DATABASE=ppe_chopesgames; UID=root; PASSWORD=; Convert Zero Datetime = true;") ;
         } // FIN FormCreerCommande
 
         private void FormCreerCommande_Load(object sender, EventArgs e)
@@ -62,22 +62,31 @@ namespace ChopesGames
             // Chargement des produits dans cmbProduit
             try
             {
-                int noProduit, disponibilite, vitrine;
+                int noProduit, noCategorie, noMarque, quantiteEnStock;
+                bool vitrine, disponibilite;
                 string libelle, detail, nomImage;
-                double prixHT, tauxTVA, quantiteEnStock;
+                double prixHT, tauxTVA;
                 DateTime dateAjout;
                 MySqlDataReader jeuEnr = null;
                 sqlcon.Open();
-                string requete = "Select NOPRODUIT, LIBELLE, PRIXHT, TAUXTVA, NOMIMAGE, QUANTITEENSTOCK, DATEAJOUT, DISPONIBLE, VITRINE FROM produit ORDER BY NOPRODUIT";
+                string requete = "SELECT * FROM produit ORDER BY NOPRODUIT";
                 var maCde = new MySqlCommand(requete, sqlcon);
                 jeuEnr = maCde.ExecuteReader();
                 while (jeuEnr.Read())
                 {
                     noProduit = jeuEnr.GetInt32("NOPRODUIT");
+                    noCategorie = jeuEnr.GetInt32("NOCATEGORIE");
+                    noMarque = jeuEnr.GetInt32("NOMARQUE");
+                    quantiteEnStock = jeuEnr.GetInt32("QUANTITEENSTOCK");
                     libelle = jeuEnr.GetString("LIBELLE");
+                    detail = jeuEnr.GetString("DETAIL");
+                    nomImage = jeuEnr.GetString("NOMIMAGE");
                     prixHT = jeuEnr.GetDouble("PRIXHT");
                     tauxTVA = jeuEnr.GetDouble("TAUXTVA");
-                    //cmbProduit.Items.Add(new Produit(noProduit, libelle));
+                    disponibilite = jeuEnr.GetBoolean("DISPONIBLE");
+                    vitrine = jeuEnr.GetBoolean("VITRINE");
+                    dateAjout = jeuEnr.GetDateTime("DATEAJOUT").Date;
+                    cmbProduit.Items.Add(new Produit(noProduit, noCategorie, noMarque, quantiteEnStock, libelle, detail, nomImage, prixHT, tauxTVA, disponibilite, vitrine, dateAjout));
                 }
             }
             catch (MySqlException erreur)
