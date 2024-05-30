@@ -20,6 +20,7 @@ namespace ChopesGames
             maCnx = new MySqlConnection("SERVER=127.0.0.1; DATABASE=ppe_chopesgames; UID=root; PASSWORD=; Convert Zero Datetime = true;");
         }
 
+        // Permet lors du chargement, une declaration de la requête puis envoie dans charger produit
         private void FormListerProduits_Load(object sender, EventArgs e)
         {
             lvProduits.View = View.Details;
@@ -33,6 +34,8 @@ namespace ChopesGames
             lvProduits.Columns.Add("Quantitée", 70);
             lvProduits.Columns.Add("Disponible", 70);
             lvProduits.Columns.Add("Vitrine", 50);
+
+            // Chargement des categories dans cmbCategorie
             try
             {
                 string requête;
@@ -63,6 +66,7 @@ namespace ChopesGames
                 }
             }
 
+            // Chargement des marques dans cmbMarque
             try
             {
                 string requête;
@@ -93,10 +97,12 @@ namespace ChopesGames
                 }
             }
 
+            // Chargement des produits
             string requete = "Select DATEAJOUT,LIBELLE,PRIXHT,TAUXTVA,QUANTITEENSTOCK,DISPONIBLE,VITRINE from Produit";
             ChargerListeProduits(requete);
         }
 
+        // Permet lorsque la valeur de la cmbCategorie change, on récupère le noCategorie et on l'envoie à critères de recherche pour la requête
         private void cmbCategorie_SelectedIndexChanged(object sender, EventArgs e)
         {
             int noCategorie;
@@ -134,6 +140,7 @@ namespace ChopesGames
             criteresRecherche(noMarque, noCategorie);
         }
 
+        // Permet lorsque la valeur de la cmbMarque change, on récupère le cmbMarque et on l'envoie à critères de recherche pour la requete
         private void cmbMarque_SelectedIndexChanged(object sender, EventArgs e)
         {
             int noCategorie;
@@ -171,6 +178,7 @@ namespace ChopesGames
             criteresRecherche(noMarque, noCategorie);
         }
 
+        // Permet de charger la liste des produits
         void ChargerListeProduits(string requete)
         {
             lvProduits.Items.Clear();
@@ -192,7 +200,7 @@ namespace ChopesGames
                     TabItem[3] = jeuEnr.GetDouble("TAUXTVA").ToString();
                     TabItem[4] = jeuEnr.GetInt32("QUANTITEENSTOCK").ToString();
                     TabItem[5] = jeuEnr.GetInt32("DISPONIBLE").ToString();
-                    TabItem[6] = jeuEnr.GetInt32("Vitrine").ToString();
+                    TabItem[6] = jeuEnr.GetInt32("VITRINE").ToString();
                     lvProduits.Items.Add(new ListViewItem(TabItem));
                 }
             }
@@ -210,6 +218,7 @@ namespace ChopesGames
 
         }
 
+        // Permet de préparer la requête avec les valeurs récupérés
         void criteresRecherche(int noMarque, int noCategorie)
         {
             string requete;

@@ -29,7 +29,7 @@ namespace ChopesGames
 
         public override string ToString()
         {
-            return noMarque.ToString() + " - " + nom;
+            return nom;
         }
     }
 }
