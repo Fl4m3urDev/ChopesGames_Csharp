@@ -21,7 +21,7 @@ namespace ChopesGames
         public FormModifierProduit()
         {
             InitializeComponent();
-            maCnx = new MySqlConnection("SERVER=127.0.0.1; DATABASE=ppe_chopesgames; UID=root; PASSWORD=; Convert Zero Datetime = true;");
+            maCnx = new MySqlConnection("SERVER=127.0.0.1; PORT=3307; DATABASE=ppe_chopesgames; UID=root; PASSWORD=; Convert Zero Datetime = true;");
         }
 
         private void FormModifierProduit_Load(object sender, EventArgs e)
@@ -109,13 +109,13 @@ namespace ChopesGames
                     noMarque = jeuEnr.GetInt32("NOMARQUE");
                     quantiteEnStock = jeuEnr.GetInt32("QUANTITEENSTOCK");
                     libelle = jeuEnr.GetString("LIBELLE");
-                    detail = jeuEnr.GetString("DETAIL");
-                    nomImage = jeuEnr.GetString("NOMIMAGE");
-                    prixHT = jeuEnr.GetDouble("PRIXHT");
-                    tauxTVA = jeuEnr.GetDouble("TAUXTVA");
-                    disponibilite = jeuEnr.GetBoolean("DISPONIBLE");
-                    vitrine = jeuEnr.GetBoolean("VITRINE");
-                    dateAjout = jeuEnr.GetDateTime("DATEAJOUT").Date;
+                    detail = jeuEnr["DETAIL"] == DBNull.Value ? "" : jeuEnr.GetString("DETAIL");
+                    nomImage = jeuEnr["NOMIMAGE"] == DBNull.Value ? "" : jeuEnr.GetString("NOMIMAGE");
+                    prixHT = jeuEnr["PRIXHT"] == DBNull.Value ? 0 : jeuEnr.GetDouble("PRIXHT");
+                    tauxTVA = jeuEnr["TAUXTVA"] == DBNull.Value ? 0 : jeuEnr.GetDouble("TAUXTVA");
+                    disponibilite = jeuEnr["DISPONIBLE"] == DBNull.Value ? false : jeuEnr.GetBoolean("DISPONIBLE");
+                    vitrine = jeuEnr["VITRINE"] == DBNull.Value ? false : jeuEnr.GetBoolean("VITRINE");
+                    dateAjout = jeuEnr["DATEAJOUT"] == DBNull.Value ? DateTime.MinValue : jeuEnr.GetDateTime("DATEAJOUT");
                     cmbProduit.Items.Add(new Produit(noProduit, noCategorie, noMarque, quantiteEnStock, libelle, detail, nomImage, prixHT, tauxTVA, disponibilite, vitrine, dateAjout));
                 }
             }
@@ -270,7 +270,6 @@ namespace ChopesGames
                                                  "VITRINE = @vitrine" +
                               " WHERE NOPRODUIT = " + noProduit + ";";
                     var maCde = new MySqlCommand(requête, maCnx);
-                    maCde.Prepare();
                     int noCategorie = ((Categorie)(cmbCategorie.SelectedItem)).GetNoCategorie();
                     int noMarque = ((Marque)(cmbMarque.SelectedItem)).GetNoMarque();
                     maCde.Parameters.AddWithValue("@noCategorie", noCategorie);

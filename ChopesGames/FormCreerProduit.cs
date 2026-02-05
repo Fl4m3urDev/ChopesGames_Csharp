@@ -16,7 +16,7 @@ namespace ChopesGames
         public FormCreerProduit()
         {
             InitializeComponent();
-            maCnx = new MySqlConnection("SERVER=127.0.0.1; DATABASE=ppe_chopesgames; UID=root; PASSWORD=");
+            maCnx = new MySqlConnection("SERVER=127.0.0.1; PORT=3307; DATABASE=ppe_chopesgames; UID=root; PASSWORD=");
         }
 
         private void FormCreerProduit_Load(object sender, EventArgs e)
@@ -96,8 +96,6 @@ namespace ChopesGames
                     requête = "Insert into produit(NOCATEGORIE,NOMARQUE,LIBELLE,DETAIL,PRIXHT,TAUXTVA,NOMIMAGE,QUANTITEENSTOCK,DATEAJOUT,DISPONIBLE,VITRINE) " +
                         "values (@noCategorie,@noMarque,@libelle,@detail,@prixHT,@tauxTVA,@nomimage,@quantiteenstock,@dateajout,@disponible,@vitrine)";
                     var maCde = new MySqlCommand(requête, maCnx);
-                    maCde.Prepare();
-
                     int noCategorie = ((Categorie)(cmbCategorie.SelectedItem)).GetNoCategorie();
                     int noMarque = ((Marque)(cmbMarque.SelectedItem)).GetNoMarque();
                     maCde.Parameters.AddWithValue("@noCategorie", noCategorie);

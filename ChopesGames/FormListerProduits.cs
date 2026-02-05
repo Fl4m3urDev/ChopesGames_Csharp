@@ -17,7 +17,7 @@ namespace ChopesGames
         public FormListerProduits()
         {
             InitializeComponent();
-            maCnx = new MySqlConnection("SERVER=127.0.0.1; DATABASE=ppe_chopesgames; UID=root; PASSWORD=; Convert Zero Datetime = true;");
+            maCnx = new MySqlConnection("SERVER=127.0.0.1; PORT=3307; DATABASE=ppe_chopesgames; UID=root; PASSWORD=; Convert Zero Datetime=true;");
         }
 
         // Permet lors du chargement, une declaration de la requête puis envoie dans charger produit
@@ -193,14 +193,34 @@ namespace ChopesGames
                 var TabItem = new string[7];
                 while (jeuEnr.Read())
                 {
+                    TabItem[0] = !jeuEnr.IsDBNull(jeuEnr.GetOrdinal("DATEAJOUT"))
+                                    ? jeuEnr.GetDateTime("DATEAJOUT").ToString()
+                                    : "";
 
-                    TabItem[0] = jeuEnr.GetDateTime("DATEAJOUT").ToString();
-                    TabItem[1] = jeuEnr.GetString("LIBELLE");
-                    TabItem[2] = jeuEnr.GetDouble("PRIXHT").ToString();
-                    TabItem[3] = jeuEnr.GetDouble("TAUXTVA").ToString();
-                    TabItem[4] = jeuEnr.GetInt32("QUANTITEENSTOCK").ToString();
-                    TabItem[5] = jeuEnr.GetInt32("DISPONIBLE").ToString();
-                    TabItem[6] = jeuEnr.GetInt32("VITRINE").ToString();
+                    TabItem[1] = !jeuEnr.IsDBNull(jeuEnr.GetOrdinal("LIBELLE"))
+                                    ? jeuEnr.GetString("LIBELLE")
+                                    : "";
+
+                    TabItem[2] = !jeuEnr.IsDBNull(jeuEnr.GetOrdinal("PRIXHT"))
+                                    ? jeuEnr.GetDouble("PRIXHT").ToString()
+                                    : "";
+
+                    TabItem[3] = !jeuEnr.IsDBNull(jeuEnr.GetOrdinal("TAUXTVA"))
+                                    ? jeuEnr.GetDouble("TAUXTVA").ToString()
+                                    : "";
+
+                    TabItem[4] = !jeuEnr.IsDBNull(jeuEnr.GetOrdinal("QUANTITEENSTOCK"))
+                                    ? jeuEnr.GetInt32("QUANTITEENSTOCK").ToString()
+                                    : "";
+
+                    TabItem[5] = !jeuEnr.IsDBNull(jeuEnr.GetOrdinal("DISPONIBLE"))
+                                    ? jeuEnr.GetInt32("DISPONIBLE").ToString()
+                                    : "";
+
+                    TabItem[6] = !jeuEnr.IsDBNull(jeuEnr.GetOrdinal("VITRINE"))
+                                    ? jeuEnr.GetInt32("VITRINE").ToString()
+                                    : "";
+
                     lvProduits.Items.Add(new ListViewItem(TabItem));
                 }
             }

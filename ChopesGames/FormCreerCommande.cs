@@ -15,7 +15,7 @@ namespace ChopesGames
         public FormCreerCommande()
         {
             InitializeComponent();
-            sqlcon = new MySqlConnection("SERVER=127.0.0.1; DATABASE=ppe_chopesgames; UID=root; PASSWORD=; Convert Zero Datetime = true;") ;
+            sqlcon = new MySqlConnection("SERVER=127.0.0.1; PORT=3307; DATABASE=ppe_chopesgames; UID=root; PASSWORD=; Convert Zero Datetime = true;") ;
         } // FIN FormCreerCommande
 
         private void FormCreerCommande_Load(object sender, EventArgs e)
@@ -79,13 +79,13 @@ namespace ChopesGames
                     noMarque = jeuEnr.GetInt32("NOMARQUE");
                     quantiteEnStock = jeuEnr.GetInt32("QUANTITEENSTOCK");
                     libelle = jeuEnr.GetString("LIBELLE");
-                    detail = jeuEnr.GetString("DETAIL");
-                    nomImage = jeuEnr.GetString("NOMIMAGE");
-                    prixHT = jeuEnr.GetDouble("PRIXHT");
-                    tauxTVA = jeuEnr.GetDouble("TAUXTVA");
-                    disponibilite = jeuEnr.GetBoolean("DISPONIBLE");
-                    vitrine = jeuEnr.GetBoolean("VITRINE");
-                    dateAjout = jeuEnr.GetDateTime("DATEAJOUT").Date;
+                    detail = jeuEnr["DETAIL"] == DBNull.Value ? "" : jeuEnr.GetString("DETAIL");
+                    nomImage = jeuEnr["NOMIMAGE"] == DBNull.Value ? "" : jeuEnr.GetString("NOMIMAGE");
+                    prixHT = jeuEnr["PRIXHT"] == DBNull.Value ? 0 : jeuEnr.GetDouble("PRIXHT");
+                    tauxTVA = jeuEnr["TAUXTVA"] == DBNull.Value ? 0 : jeuEnr.GetDouble("TAUXTVA");
+                    disponibilite = jeuEnr["DISPONIBLE"] == DBNull.Value ? false : jeuEnr.GetBoolean("DISPONIBLE");
+                    vitrine = jeuEnr["VITRINE"] == DBNull.Value ? false : jeuEnr.GetBoolean("VITRINE");
+                    dateAjout = jeuEnr["DATEAJOUT"] == DBNull.Value ? DateTime.MinValue : jeuEnr.GetDateTime("DATEAJOUT");
                     cmbProduit.Items.Add(new Produit(noProduit, noCategorie, noMarque, quantiteEnStock, libelle, detail, nomImage, prixHT, tauxTVA, disponibilite, vitrine, dateAjout));
                 }
             }
@@ -260,14 +260,20 @@ namespace ChopesGames
                     {
                         int noClient = ((Client)(cmbClient.SelectedItem)).GetNoClient();
                         sqlcon.Open(); // on se connecte
-                        string requete = "INSERT INTO Commande (NOCLIENT, DATECOMMANDE, TOTALHT, TOTALTTC) values (@noClient, @dateCommande, @totalHT,@totalTTC);SELECT LAST_INSERT_ID()";
+                        string requete = @"INSERT INTO Commande (NOCLIENT, DATECOMMANDE, TOTALHT, TOTALTTC) VALUES (@noClient, @dateCommande, @totalHT, @totalTTC)";
+
                         var sqlcomCommande = new MySqlCommand(requete, sqlcon);
-                        sqlcomCommande.Prepare();
                         sqlcomCommande.Parameters.AddWithValue("@noClient", noClient);
                         sqlcomCommande.Parameters.AddWithValue("@dateCommande", DateTime.Now);
                         sqlcomCommande.Parameters.AddWithValue("@totalHT", double.Parse(lblTotalHT.Text));
                         sqlcomCommande.Parameters.AddWithValue("@totalTTC", double.Parse(lblTotalTTC.Text));
-                        noCommande = Convert.ToInt32(sqlcomCommande.ExecuteScalar()); // en cas de null, erreur à l'exécution si cast
+
+                        sqlcomCommande.ExecuteNonQuery();
+
+                        // récupérer l’ID
+                        var sqlId = new MySqlCommand("SELECT LAST_INSERT_ID()", sqlcon);
+                        noCommande = Convert.ToInt32(sqlId.ExecuteScalar());
+
                         MessageBox.Show("Commande crée : n°" + noCommande.ToString());
                     }
                     catch (MySqlException erreur)
@@ -294,7 +300,6 @@ namespace ChopesGames
                         {
                             sqlcon.Open();
                             var sqlcomLigne = new MySqlCommand("INSERT INTO Ligne values (@noCommande,@noProduit,@quantiteCommandee);", sqlcon);
-                            sqlcomLigne.Prepare();
                             sqlcomLigne.Parameters.AddWithValue("@noCommande", noCommande);
                             sqlcomLigne.Parameters.AddWithValue("@noProduit", ligne.SubItems[0].Text);
                             sqlcomLigne.Parameters.AddWithValue("@quantiteCommandee", ligne.SubItems[2].Text);

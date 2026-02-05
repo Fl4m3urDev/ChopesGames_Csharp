@@ -5,7 +5,6 @@ using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-
 namespace ChopesGames
 {
     public partial class FormCreerClient : Form
@@ -25,7 +24,7 @@ namespace ChopesGames
         private void btnCreer_Click(object sender, EventArgs e)
         {
             MySqlConnection maCnx; // ! déclaration avant le bloc Try
-            maCnx = new MySqlConnection("SERVER=127.0.0.1; DATABASE=ppe_chopesgames; UID=root; PASSWORD=");
+            maCnx = new MySqlConnection("SERVER=127.0.0.1; PORT=3307; DATABASE=ppe_chopesgames; UID=root; PASSWORD=");
             if (nomEstValide && prenomEstValide && adresseEstValide && villeEstValide
                 && codePostalEstValide && emailEstValide && motDePasseEstValide)
             {
@@ -35,7 +34,6 @@ namespace ChopesGames
                     maCnx.Open(); // on se connecte
                     requête = "INSERT INTO Client (NOM,PRENOM,ADRESSE,VILLE, CODEPOSTAL, EMAIL, MOTDEPASSE) values (@nom,@prenom,@adresse,@ville,@codePostal,@email,@motdepasse)";
                     var maCde = new MySqlCommand(requête, maCnx);
-                    maCde.Prepare();
                     maCde.Parameters.AddWithValue("@nom", tbxNom.Text);
                     maCde.Parameters.AddWithValue("@prenom", tbxPrenom.Text);
                     maCde.Parameters.AddWithValue("@adresse", tbxAdresse.Text);

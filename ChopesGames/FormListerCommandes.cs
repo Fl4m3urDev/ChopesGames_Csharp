@@ -11,7 +11,7 @@ namespace ChopesGames
         public FormListerCommandes()
         {
             InitializeComponent();
-            sqlcon = new MySqlConnection("SERVER=127.0.0.1; DATABASE=ppe_chopesgames; UID=root; PASSWORD=");
+            sqlcon = new MySqlConnection("SERVER=127.0.0.1; PORT=3307; DATABASE=ppe_chopesgames; UID=root; PASSWORD=");
         }
 
         void ChargerListeCommandes(int noClient)
@@ -36,7 +36,6 @@ namespace ChopesGames
                 {
                     string requete = "Select NOCOMMANDE, DATECOMMANDE, TOTALHT, TOTALTTC FROM commande WHERE NOCLIENT=@noClient ORDER BY NOCOMMANDE DESC;";
                     sqlcomCommandes = new MySqlCommand(requete, sqlcon);
-                    sqlcomCommandes.Prepare();
                     sqlcomCommandes.Parameters.AddWithValue("@noClient", noClient);
                 }
                 else
